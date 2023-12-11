@@ -7,7 +7,7 @@ def android_get_desired_capabilities():
         'platformName': 'Android',
         'platformVersion': '11',
         'resetKeyboard': True,
-        'systemPort': 8042,     # 8301
+        'systemPort': 8380,     # 8301
         'takesScreenshot': True,
         'udid': 'emulator-5554',     # 11bd127d, EMULATOR32X1X14X0
         'appPackage': 'com.ajaxsystems',

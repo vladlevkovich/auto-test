@@ -10,38 +10,31 @@ class LoginPage(Page):
 
     def login_test(self, email, password):
         try:
-            self.click_element(
-                AppiumBy.XPATH, '(//androidx.compose.ui.platform.ComposeView['
-                                '@resource-id="com.ajaxsystems:id/compose_view"])['
-                                '1]/android.view.View/android.view.View/android.widget.Button'
-            )
-            sleep(5)
+            self.find_element(AppiumBy.XPATH, '//android.widget.TextView[@resource-id="com.ajaxsystems:id/text" and @text="Log In"]').click()
+            sleep(1)
             # введення пошти
             self.find_element(
-                AppiumBy.XPATH, '(//android.widget.EditText[@resource-id="defaultAutomationId"])[1]'
+                AppiumBy.XPATH, '//android.widget.EditText[@resource-id="defaultAutomationId"][1]'
             ).send_keys(email)
-            sleep(5)
+            sleep(1)
             # # введення паролю
             self.find_element(
                 AppiumBy.XPATH, '(//android.widget.EditText[@resource-id="defaultAutomationId"])[2]'
             ).send_keys(password)
-            sleep(5)
+            sleep(1)
             # # перевірка успішновсті входу
-            self.click_element(
-                AppiumBy.XPATH, '(//androidx.compose.ui.platform.ComposeView['
-                                '@resource-id="com.ajaxsystems:id/compose_view"])['
-                                '4]/android.view.View/android.view.View/android.widget.Button')   #.click()
-            sleep(2)
-            print('TRUE')
+            self.find_element(
+                AppiumBy.XPATH,
+                '(//androidx.compose.ui.platform.ComposeView[@resource-id="com.ajaxsystems:id/compose_view"])['
+                '4]/android.view.View/android.view.View/android.widget.Button').click()
+            sleep(5)
+            # перевірка чи вірні ввів дані користувач
             try:
-                print('TRY')
-                error_message = self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
-                                                                          '@resource-id="com.ajaxsystems:id/snackbar_text"]').text
-                if error_message:
-                    print(f'Error message: {error_message}')
-                    return False
-            except:
-                print('except')
+                # вспливаюче поле повідомлення про невірні дані
+                self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
+                                                         '@resource-id="com.ajaxsystems:id/snackbar_text"]')
+                return False
+            except NoSuchElementException:
                 return True
         except NoSuchElementException as e:
             print(f'Error: {str(e)}')
@@ -52,57 +45,59 @@ class LoginPage(Page):
 
         try:
             # пошук sidebar
-            self.click_element(
+            self.find_element(
                 AppiumBy.XPATH, '//android.widget.ImageView[@resource-id="com.ajaxsystems:id/menuDrawer"]'
-            )   #.click()
-            sleep(2)
+            ).click()
+            sleep(3)
             # пошук пункта меню налаштування застосунку
             self.find_element(
                 AppiumBy.XPATH, '//android.widget.TextView[@resource-id="com.ajaxsystems:id/title" and @text="App '
                                 'Settings"]')
-            sleep(2)
+            sleep(3)
             # пошук меню допомога
-            self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
+            self.driver.find_element(AppiumBy.XPATH, '//android.widget.TextView['
                                                      '@resource-id="com.ajaxsystems:id/title" and @text="Help"]')
-            sleep(2)
+            sleep(3)
             # пошук пункту менню повідомити про проблему
             self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
                                                      '@resource-id="com.ajaxsystems:id/title" and @text="Report a '
                                                      'Problem"]')
-            sleep(2)
+            sleep(3)
             # пошук пункту менню додати хаб
-            self.find_element(AppiumBy.XPATH, '(//android.widget.TextView['
-                                                     '@resource-id="com.ajaxsystems:id/text"])[2]')
-            sleep(2)
+            self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
+                                                     '@resource-id="com.ajaxsystems:id/text"][2]')
+            sleep(3)
             # умови використання
             self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
                                                      '@resource-id="com.ajaxsystems:id/documentation_text"]')
-            sleep(2)
+            sleep(3)
             # номер версії застосунку
             self.find_element(AppiumBy.XPATH, '//android.widget.TextView['
                                                      '@resource-id="com.ajaxsystems:id/build"]')
-            sleep(2)
+            sleep(3)
 
             # перевірка іконок sidebar
 
             # іконка налаштувань
             self.find_element(AppiumBy.XPATH, '(//android.view.View[@resource-id="com.ajaxsystems:id/atomImage'
                                                      '"])[1]')
-            sleep(2)
+            sleep(3)
             # іконка допомоги
             self.find_element(AppiumBy.XPATH, '(//android.view.View[@resource-id="com.ajaxsystems:id/atomImage'
                                                      '"])[2]')
-            sleep(2)
+            sleep(3)
             # іконка повідомити про проблему
             self.find_element(AppiumBy.XPATH, '(//android.view.View[@resource-id="com.ajaxsystems:id/atomImage'
                                                      '"])[3]')
-            sleep(2)
+            sleep(3)
             # іконка на кнопці додати хаб
-            self.find_element(AppiumBy.XPATH, '//android.view.View[@resource-id="com.ajaxsystems:id/start_icon"]')
-            sleep(2)
+            self.find_element(AppiumBy.XPATH,
+                                     '//android.view.View[@resource-id="com.ajaxsystems:id/start_icon"]')
+            sleep(3)
             # кнопка додати хаб
             self.find_element(AppiumBy.XPATH, '//android.widget.Button')
-            sleep(2)
+            sleep(3)
             return True
-        except Exception:
+        except Exception as e:
+            print(f'Error sidebar: {str(e)}')
             return False

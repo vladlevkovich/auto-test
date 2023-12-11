@@ -1,6 +1,5 @@
 import subprocess
 import time
-
 import pytest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
@@ -23,6 +22,10 @@ def run_appium_server():
 def driver(run_appium_server):
     capabilities_options = UiAutomator2Options().load_capabilities(android_get_desired_capabilities())
     driver = webdriver.Remote('http://localhost:4723/wd/hub', options=capabilities_options)    # wd/hub/session
+    log = driver.get_log('logcat')
+    with open("tests.log", "wb") as f:  # Open file in binary mode
+        for line in log:
+            f.write(f"{line}\n".encode("utf-8"))
     yield driver
 
 # appium --base-path /wd/hub --port 4001 - запуск appium

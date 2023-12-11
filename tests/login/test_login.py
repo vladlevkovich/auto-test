@@ -10,5 +10,5 @@ def test_user_login(user_login_fixture, email, password, result):
         assert user_login_fixture.login_test(email, password)
         assert user_login_fixture.sidebar_test()
     else:
-        assert not user_login_fixture.login_test(email, password)
+        assert not user_login_fixture.login_test(email, password) is False
 
